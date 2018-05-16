@@ -4,7 +4,7 @@ function name = path2name(fullpth)
   if d(1) == '@'
     name = d;
   elseif d(1) == '+'
-    name = [d(2:end), '.', f, e];
+    name = [d, filesep, f, e];
   elseif strcmp(e, '.m')
     name = [f, e];
   else
