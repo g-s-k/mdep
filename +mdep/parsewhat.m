@@ -11,7 +11,7 @@ function parsed = parsewhat(whatout)
   uo = {'UniformOutput', false};
 
   % fix class names
-  classes_fixed = cellfun(@(c) ['@', c], whatout.classes, uo{:});
+  classes_fixed = cellfun(@(c) ['@', c, filesep, c, '.m'], whatout.classes, uo{:});
 
   % special handling for packages
   package_contents = cellfun(@(p) meta.package.fromName(p), whatout.packages, uo{:});
@@ -27,7 +27,13 @@ function parsed = parsewhat(whatout)
     end
 
     for m = 1:length(package_classes{l})
-      pkg{k} = ['+', strrep(package_classes{l}{m}, '.', [filesep, '@'])];
+      pkg{k} = [ ...
+          '+', ...
+          strrep(package_classes{l}{m}, '.', [filesep, '@']), ...
+          filesep, ...
+          regexprep(package_classes{l}{m}, '[A-Za-z_0-9]+\.', ''), ...
+          '.m' ...
+               ];
       k = k + 1;
     end
   end
