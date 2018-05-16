@@ -5,6 +5,8 @@
 %   RUN('..') does so in the parent directory.
 
 function varargout = run(dirname)
+  uo = {'UniformOutput', false};
+
   % default wd
   if ~nargin
     dirname = '.';
@@ -13,29 +15,20 @@ function varargout = run(dirname)
   % list everything in the directory
   items = mdep.parsewhat(what(dirname));
 
-  % preallocate and get dependencies
-  [deps, deps_clean] = deal(cell(size(items)));
-
-  parfor k = 1:length(items)
-    deps{k} = mdep.getdeps(items{k});
-  end
+  % get dependencies
+  deps = cellfun(@mdep.getdeps, items, uo{:});
 
   % build the graph
-  parfor k = 1:length(deps)
-    deps_clean{k} = cellfun(@mdep.path2name, deps{k}, 'uniformoutput', false);
-  end
-
-  nodes = cat(1, items, setdiff([deps_clean{:}], items).');
-  con_list = cellfun(@(el) ismember(nodes, el), deps_clean, 'uniformoutput', ...
-                     false);
+  nodes = cat(1, items, setdiff([deps{:}], items).');
+  con_list = cellfun(@(el) ismember(nodes, el), deps, uo{:});
 
   con_mat = cat(2, con_list{:});
   con_mat(:, end+1:size(con_mat, 1)) = 0;
 
   % display it
   grph = digraph(con_mat.', nodes, 'OmitSelfLoops');
-  plot(grph, 'k--', 'layout', 'layered')
-  grid off
+  nodes_short = cellfun(@mdep.path2name, nodes, uo{:});
+  plot(grph, 'layout', 'circle', 'NodeLabel', nodes_short)
   axis off
 
   % return it
