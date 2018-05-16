@@ -8,12 +8,18 @@ function parsed = parsewhat(whatout)
   % special handling for packages
   package_contents = cellfun(@(p) meta.package.fromName(p), whatout.packages, uo{:});
   package_functions = cellfun(@(c) {c.FunctionList.Name}, package_contents, uo{:});
+  package_classes = cellfun(@(c) {c.ClassList.Name}, package_contents, uo{:});
 
-  pkg = cell(sum(cellfun(@numel, package_functions)), 1);
+  pkg = cell(sum(cellfun(@numel, cat(1, package_functions, package_classes))), 1);
   k = 1;
   for l = 1:length(package_contents)
     for m = 1:length(package_functions{l})
       pkg{k} = sprintf('+%s%s%s.m', whatout.packages{l}, filesep, package_functions{l}{m});
+      k = k + 1;
+    end
+
+    for m = 1:length(package_classes{l})
+      pkg{k} = ['+', strrep(package_classes{l}{m}, '.', [filesep, '@'])];
       k = k + 1;
     end
   end
