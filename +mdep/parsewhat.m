@@ -34,4 +34,5 @@ function parsed = parsewhat(whatout)
 
   % put it all together
   parsed = cat(1, pkg, classes_fixed, whatout.m, whatout.mex);
+  parsed = cellfun(@(el) fullfile(whatout.path, el), parsed, uo{:});
 end
