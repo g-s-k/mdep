@@ -1,3 +1,3 @@
-function deps = getdeps(mfilename)
-  deps = matlab.codetools.requiredFilesAndProducts(mfilename, 'toponly');
+function deps = getdeps(filename)
+  deps = matlab.codetools.requiredFilesAndProducts(filename, 'toponly');
 end
