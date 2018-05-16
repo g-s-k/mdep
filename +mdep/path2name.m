@@ -11,6 +11,8 @@ function name = path2name(fullpth)
   [p2, d] = fileparts(p);
   if d(1) == '@'
     name = d;
+  elseif f(1) == '@'
+    name = f;
   elseif d(1) == '+'
     name = [d, filesep, f, e];
   elseif any(strcmp(e, {'.m', '.fig', ['.', mexext]}))
