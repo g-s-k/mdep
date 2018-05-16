@@ -13,7 +13,7 @@ function name = path2name(fullpth)
     name = d;
   elseif d(1) == '+'
     name = [d, filesep, f, e];
-  elseif strcmp(e, '.m')
+  elseif any(strcmp(e, {'.m', '.fig', ['.', mexext]}))
     name = [f, e];
   else
     name = fullpth;
