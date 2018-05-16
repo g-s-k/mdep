@@ -34,7 +34,7 @@ function varargout = run(dirname)
 
   % display it
   grph = digraph(con_mat.', nodes, 'OmitSelfLoops');
-  plot(grph, 'layout', 'layered')
+  plot(grph, 'k--', 'layout', 'layered')
   grid off
   axis off
 
