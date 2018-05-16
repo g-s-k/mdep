@@ -10,7 +10,11 @@ function name = path2name(fullpth)
   [p, f, e] = fileparts(fullpth);
   [p2, d] = fileparts(p);
   if d(1) == '@'
-    name = d;
+    if strcmp(d(2:end), f)
+      name = d;
+    else
+      name = [d, filesep, f, e];
+    end
   elseif f(1) == '@'
     name = f;
   elseif d(1) == '+'
