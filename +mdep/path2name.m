@@ -1,3 +1,11 @@
+% PATH2NAME convert a file path into a legible name
+%
+%   PATH2NAME('C:\matlab\function_xy.m') returns 'function_xy.m'.
+%
+%   PATH2NAME('/home/user123/matlab/@MyClass/MyClass.m') returns '@MyClass'.
+%
+%   See also MDEP.RUN
+
 function name = path2name(fullpth)
   [p, f, e] = fileparts(fullpth);
   [p2, d] = fileparts(p);

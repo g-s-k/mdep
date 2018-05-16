@@ -1,3 +1,9 @@
+% RUN investigate and graph dependencies in your code
+%
+%   RUN performs its analysis on the code in the current working dir.
+%
+%   RUN('..') does so in the parent directory.
+
 function varargout = run(dirname)
   % default wd
   if ~nargin

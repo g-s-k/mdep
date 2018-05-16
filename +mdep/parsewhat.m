@@ -1,3 +1,11 @@
+% PARSEWHAT turn the output of the `what` command into something useful
+%
+%   PARSEWHAT(what) returns a list of all the scripts, functions, and
+%   class directories residing in the current working directory, as well
+%   as any of those residing in package directories below.
+%
+%   See also WHAT, MDEP.RUN
+
 function parsed = parsewhat(whatout)
   % helper variable
   uo = {'UniformOutput', false};
